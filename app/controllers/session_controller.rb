@@ -16,4 +16,13 @@ def destroy
 	render json: "La sesion ha sido cerrada", status: 200
 end
 
+ def savesession
+    @username = @user.username
+    @token =  SecureRandom.uuid.gsub(/\-/,'')
+    @fechacreacion = Time.now
+    
+    @session = Session.new(parametro = {:username=>"La Marilla", :fecha=>"2016 .....", :token=>"qwefq45qwfadf3"})
+
+ end
+
 end
