@@ -1,5 +1,6 @@
 class SessionController < ApplicationController
-
+skip_before_action :authentication, only:[:destroy]
+    @tok = nil
 	def create
     @user = User.find_by_username(params[:username])
     @pass = User.find_by_password(params[:password])
@@ -11,7 +12,7 @@ class SessionController < ApplicationController
         parametros.to_json
         session = Session.new(parametros)
         session.save
-
+        @tok = @token
     	render json: @token , status:  200
     else
     	render json: "Invalido" ,status: 404
@@ -26,8 +27,11 @@ end
 
 def destroy
     
-    @ses = Session.where(token:=>"#{@token}")
-	render json: @ses, status: 200
+    authenticate_with_http_token do |token, options|
+    @ses = Session.find_by(token: token)   
+    end
+    @ses.destroy
+	render json: "No Joda", status: 200
 end
 
 
