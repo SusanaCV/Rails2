@@ -4,25 +4,31 @@ class SessionController < ApplicationController
     @user = User.find_by_username(params[:username])
     @pass = User.find_by_password(params[:password])
     if @user && @pass
-    	@ses = @user.id
-    	render json: @user , status:  200
+        @token =  SecureRandom.uuid.gsub(/\-/,'')
+        @fechacreacion = Time.now
+        @fechaexpiracion = @fechacreacion + 30 * 60
+        parametros = {:fecha_creacion=>"#{@fechacreacion}",:username=>"#{@user.username}", :token=>"#{@token}"}
+        parametros.to_json
+        session = Session.new(parametros)
+        session.save
+
+    	render json: @token , status:  200
     else
     	render json: "Invalido" ,status: 404
     end
   end
 
+def verificate
+    @fechaexpiracion = @fechacreacion + 30 * 60
+    
+    render json: "La sesion ha sido cerrada", status: 200
+end 
+
 def destroy
-	@ses = nil
-	render json: "La sesion ha sido cerrada", status: 200
+    
+    @ses = Session.where(token:=>"#{@token}")
+	render json: @ses, status: 200
 end
 
- def savesession
-    @username = @user.username
-    @token =  SecureRandom.uuid.gsub(/\-/,'')
-    @fechacreacion = Time.now
-    
-    @session = Session.new(parametro = {:username=>"La Marilla", :fecha=>"2016 .....", :token=>"qwefq45qwfadf3"})
-
- end
 
 end
