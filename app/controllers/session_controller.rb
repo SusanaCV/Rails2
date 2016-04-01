@@ -15,7 +15,7 @@ skip_before_action :authentication, only:[:destroy]
         @tok = @token
     	render json: @token , status:  200
     else
-    	render json: "Invalido" ,status: 404
+    	render json: "User or password invalid" ,status: 422
     end
   end
 
@@ -28,10 +28,11 @@ end
 def destroy
     
     authenticate_with_http_token do |token, options|
-    @ses = Session.find_by(token: token)   
+    @ses = Session.find_by(token: "15bab9766a134368bd20b0f9ee4733f3")  
+    @ses.destroy 
     end
-    @ses.destroy
-	render json: "No Joda", status: 200
+    
+	render json: "Sesión cerrada correctamente", status: 200
 end
 
 

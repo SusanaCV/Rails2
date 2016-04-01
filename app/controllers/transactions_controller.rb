@@ -1,5 +1,5 @@
 class TransactionsController < ApplicationController
-  before_action :set_transaction, only: [:show, :edit, :update, :destroy]
+  before_action :set_transaction, :authentication, only: [:show, :edit, :update, :destroy]
 
   # GET /transactions
   # GET /transactions.json
@@ -41,7 +41,7 @@ class TransactionsController < ApplicationController
   # PATCH/PUT /transactions/1
   # PATCH/PUT /transactions/1.json
   def update
-    if @transaction.update(product_params)
+    if @transaction.update(transaction_params)
         render json: @transaction, status: :ok
     else
         render json: @transaction.errors, status: :unprocessable_entity
@@ -66,6 +66,6 @@ class TransactionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def transaction_params
-      params.require(:transaction).permit(:product_req_id, :product_offered_id)
+      params.require(:transaction).permit(:product_id_req, :product_id_offered, :user_id)
     end
 end

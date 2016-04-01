@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
   def authentication
   	authenticate_with_http_token do |token,options|
   	fechesita = Session.find_by(token: token)
-  	if fechesita.fecha_creacion + 1 * 60 > Time.now
+  	if fechesita.fecha_creacion + 30 * 60 > Time.now
   	else
   	fechesita.destroy
   	render json: "Por Fin" , status: 200
