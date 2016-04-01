@@ -5,6 +5,7 @@ class TransactionsController < ApplicationController
   # GET /transactions.json
   def index
     @transactions = Transaction.all
+    render json: @transactions, status:  200
   end
 
   # GET /transactions/1
@@ -41,7 +42,7 @@ class TransactionsController < ApplicationController
   # PATCH/PUT /transactions/1
   # PATCH/PUT /transactions/1.json
   def update
-    if @transaction.update(transaction_params)
+    if @transaction.update(transactions_params)
         render json: @transaction, status: :ok
     else
         render json: @transaction.errors, status: :unprocessable_entity

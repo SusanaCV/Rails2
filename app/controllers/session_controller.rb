@@ -28,7 +28,7 @@ end
 def destroy
     
     authenticate_with_http_token do |token, options|
-    @ses = Session.find_by(token: "15bab9766a134368bd20b0f9ee4733f3")  
+    @ses = Session.find_by(token: "6d66397b4578493eb6f4849948aa383b")  
     @ses.destroy 
     end
     
