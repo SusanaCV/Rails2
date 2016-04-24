@@ -22,7 +22,7 @@ ActiveRecord::Schema.define(version: 20160330101620) do
     t.integer  "user_id"
   end
 
-  add_index "products", ["user_id"], name: "index_products_on_user_id"
+  add_index "products", ["user_id"], name: "index_products_on_user_id", using: :btree
 
   create_table "sessions", force: true do |t|
     t.string   "token"
@@ -40,9 +40,9 @@ ActiveRecord::Schema.define(version: 20160330101620) do
     t.integer  "product_id_offered"
   end
 
-  add_index "transactions", ["product_id_offered"], name: "index_transactions_on_product_id_offered"
-  add_index "transactions", ["product_id_req"], name: "index_transactions_on_product_id_req"
-  add_index "transactions", ["user_id"], name: "index_transactions_on_user_id"
+  add_index "transactions", ["product_id_offered"], name: "index_transactions_on_product_id_id", using: :btree
+  add_index "transactions", ["product_id_req"], name: "index_transactions_on_product_id", using: :btree
+  add_index "transactions", ["user_id"], name: "index_transactions_on_user_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "username"
