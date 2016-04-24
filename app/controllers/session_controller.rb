@@ -28,12 +28,11 @@ end
 def destroy
     
     authenticate_with_http_token do |token, options|
-    @ses = Session.find_by(token: "6d66397b4578493eb6f4849948aa383b")  
+    @ses = Session.find_by(token: token)  
     @ses.destroy 
     end
     
 	render json: "Sesión cerrada correctamente", status: 200
 end
-
 
 end
